@@ -22,7 +22,6 @@ export class Mapper {
     fieldList: FieldModel[],
     params: GetItemsParams,
   ) {
-
     // const itemResult: ItemListResponse[];
 
     for (const item of itemList) {
@@ -45,19 +44,18 @@ export class Mapper {
           });
       }
     }
-
   }
 
   private getFieldValue(type: String, data: paramsValueMapper): FieldValueType {
     switch (type) {
       case 'RICH_TEXT':
-        return this.rich_text(data);
+        return this.rich_text_map(data);
       case 'IMAGE':
-        return this.image(data);
+        return this.image_map(data);
     }
   }
 
-  private rich_text(data: paramsValueMapper): string {
+  private rich_text_map(data: paramsValueMapper): string {
     const values = <IValueTraductionModel[]>data.value;
 
     const value = values.find(
@@ -69,7 +67,23 @@ export class Mapper {
     return value?.value;
   }
 
-  private image(data: paramsValueMapper): ImageType[] {
+  private image_map(data: paramsValueMapper): ImageType[] {
+    const values = <IImageModel[]>data.value;
+
+    const images = values.filter((image) =>
+      image.traduction.some(
+        (traduction) => traduction.language == data.language,
+      ),
+    ).map(image => ({name: }));
+
+    // const value = values.find(
+    //   (value) =>
+    //     value.language == data.language &&
+    //     value.countries.includes(data.country),
+    // );
+
+    if (!value) return null;
+
     return [];
   }
 }

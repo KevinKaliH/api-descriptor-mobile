@@ -13,7 +13,6 @@ export interface ItemFieldsContent {
 
 export interface ImageType  {
     name: String;
-    description: String;
     uri: String;
 }
 
